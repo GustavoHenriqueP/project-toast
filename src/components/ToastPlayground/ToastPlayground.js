@@ -80,8 +80,6 @@ function ToastPlayground() {
           </div>
         </div>
       </form>
-
-      <ToastShelf />
     </div>
   );
 }

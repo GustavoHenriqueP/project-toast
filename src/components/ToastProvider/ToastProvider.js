@@ -1,5 +1,7 @@
 import React from 'react';
 
+import useKeyDown from '../../../hooks/useKeyDown';
+
 const ToastContext = React.createContext();
 
 export function useToast() {
@@ -14,6 +16,10 @@ export function useToast() {
 
 function ToastProvider({ children }) {
   const [toasts, setToasts] = React.useState([]);
+
+  const resetToasts = React.useCallback(() => {
+    setToasts([]);
+  }, []);
 
   const createToast = React.useCallback((variant, message) => {
     const newToast = {
@@ -31,8 +37,10 @@ function ToastProvider({ children }) {
     );
   }, []);
 
+  useKeyDown('Escape', resetToasts);
+
   return (
-    <ToastContext value={{ toasts, createToast, dismissToast }}>
+    <ToastContext value={{ toasts, createToast, dismissToast, resetToasts }}>
       {children}
     </ToastContext>
   );
